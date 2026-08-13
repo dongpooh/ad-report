@@ -69,9 +69,7 @@ if menu == "💰 마진현황":
         file_console2 = st.file_uploader("📂 콘솔 정산 (조기)", type=["xlsx"], key="m_con2")
 
 
-    if st.button("🔍 조회하기", type="primary", key="m_btn"):
-        if not file_erp or (not file_console1 and not file_console2):
-            st.error("❌ ERP + 콘솔 정산 최소 1개 올려주세요.")
+    if file_erp and (file_console1 or file_console2):
         else:
             df_erp = pd.read_excel(file_erp, engine='openpyxl')
             df_erp.columns = df_erp.columns.astype(str).str.strip()
