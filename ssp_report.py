@@ -70,7 +70,7 @@ if menu == "💰 마진현황":
 
 
     if file_erp and (file_console1 or file_console2):
-        else:
+        
             df_erp = pd.read_excel(file_erp, engine='openpyxl')
             df_erp.columns = df_erp.columns.astype(str).str.strip()
             df_erp['매체사코드'] = df_erp['매체사코드'].astype(str).str.strip()
