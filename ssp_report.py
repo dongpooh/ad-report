@@ -196,8 +196,18 @@ if menu == "💰 마진현황":
                     d['ERP건수'] = d['ERP건수'].astype(int)
                     d['마진'] = df_split['매체수수료 합계(KRW)'].fillna(0).astype(int).apply(lambda x: f"{x:,}")
                     st.table(d.reset_index(drop=True))
+                          st.markdown("**ERP 상세 내역:**")
+                for code in df_split['ERP 매체코드'].unique():
+                    erp_detail = df_erp[df_erp['매체사코드'] == code][['매체사 명', '매체비 합계(KRW)', '매체수수료 합계(KRW)', '비고']].copy()
+                    erp_detail['매체비 합계(KRW)'] = erp_detail['매체비 합계(KRW)'].apply(lambda x: f"{int(x):,}")
+                    erp_detail['매체수수료 합계(KRW)'] = erp_detail['매체수수료 합계(KRW)'].apply(lambda x: f"{int(x):,}")
+                    erp_detail = erp_detail.rename(columns={'매체사 명':'매체명','매체수수료 합계(KRW)':'마진','매체비 합계(KRW)':'매체비'})
+                    st.markdown(f"코드 `{code}`:")
+                    st.table(erp_detail.reset_index(drop=True))
                 else: st.info("해당 없음")
 
+        
+        
             with tab_iwol:
                 if not df_iwol.empty:
                     df_iwol['기준월'] = df_iwol['기준월'].astype(str).str.strip()
